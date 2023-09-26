@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      article {
+        border: 1px solid black;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      img {
+        height: auto;
+        width: 320px;
+        max-width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>BIENVENIDO A TECNOSHOP , TU TIENDA DE TECNOLOGIA DE CONFIANZA</h1>
+    </main>
+    <script type="module">
+      const data = {
+        title: "Hola sasasasasas",
+      };
+      fetch("http://localhost:1254/tasks")
+        .then((res) => res.json())
+        .then((shop) => {
+          const html = shop
+            .map((product) => {
+              return `
+                <article data-id="${product.id_task}">
+                  <h2>${product.title}</h2>
+                  <p>${product.completed}</p>
+                  <button>Post</button>
+                </article>
+              `;
+            })
+            .join("");
+
+          document.querySelector("main").innerHTML = html;
+
+          document.addEventListener("click", (e) => {
+            if (e.target.matches("button")) {
+              fetch(`http://localhost:1254/tasks/`, {
+                method: "POST",
+                body: {
+                  title: "Hola sasasasasas",
+                },
+              });
+            }
+          });
+        });
+    </script>
+  </body>
+</html>
