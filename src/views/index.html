@@ -26,15 +26,15 @@
       const data = {
         title: "Hola sasasasasas",
       };
-      fetch("http://localhost:1254/tasks")
+      function readCo() {
+        fetch("http://localhost:1254/tasks")
         .then((res) => res.json())
         .then((shop) => {
           const html = shop
             .map((product) => {
               return `
-                <article data-id="${product.id_task}">
-                  <h2>${product.title}</h2>
-                  <p>${product.completed}</p>
+                <article data-id="${product.blog_id}">
+                  <h2>${product.blog_titulo}</h2>
                   <button>Post</button>
                 </article>
               `;
@@ -42,18 +42,22 @@
             .join("");
 
           document.querySelector("main").innerHTML = html;
-
+        });
+      }
+      readCo();
           document.addEventListener("click", (e) => {
             if (e.target.matches("button")) {
               fetch(`http://localhost:1254/tasks/`, {
                 method: "POST",
-                body: {
-                  title: "Hola sasasasasas",
+                headers: {
+                  "Content-Type": "application/json", // Indica que estás enviando datos en formato JSON
                 },
-              });
+                body: JSON.stringify(data),
+              })
+              .then(readCo());
             }
           });
-        });
+        
     </script>
   </body>
 </html>
